@@ -11,6 +11,8 @@ coverage
 # database
 prisma/db.sqlite
 prisma/db.sqlite-journal
+packages/db/prisma/db.sqlite
+packages/db/prisma/db.sqlite-journal
 
 # next.js
 .next/
