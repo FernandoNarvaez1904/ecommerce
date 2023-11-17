@@ -1,5 +1,5 @@
 import { router } from "../trpc";
-import { itemRouter } from "./post";
+import { itemRouter } from "./item";
 import { authRouter } from "./auth";
 
 export const appRouter = router({
