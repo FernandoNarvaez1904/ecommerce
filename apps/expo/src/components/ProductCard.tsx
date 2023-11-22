@@ -1,7 +1,9 @@
 import type { AppRouter } from "@acme/api";
+import { useNavigation } from "@react-navigation/native";
 import type { inferProcedureOutput } from "@trpc/server";
 import { memo } from "react";
-import { View, Image, Text } from "react-native";
+import { View, Image, Text, TouchableOpacity } from "react-native";
+import { MainNavigationStack } from "../_app";
 
 export interface ProductCardProps {
   item: inferProcedureOutput<AppRouter["item"]["byId"]>;
@@ -9,9 +11,13 @@ export interface ProductCardProps {
 
 function ProductCard({ item }: ProductCardProps) {
   const hasStock = item.stock.greaterThan(0);
+  const navigator = useNavigation<MainNavigationStack>();
 
   return (
-    <View className="flex flex-row items-center rounded border border-gray-200 bg-white p-2 py-4 shadow">
+    <TouchableOpacity
+      className="flex flex-row items-center rounded border border-gray-200 bg-white p-2 py-4 shadow"
+      onPress={() => navigator.navigate("SingleItemScreen", { id: item.id })}
+    >
       <Image
         source={{ uri: item.image_url ?? "" }}
         className="h-20 w-20"
@@ -40,7 +46,7 @@ function ProductCard({ item }: ProductCardProps) {
           )}
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 

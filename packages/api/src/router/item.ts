@@ -16,7 +16,7 @@ export const itemRouter = router({
 
   byId: publicProcedure
     .input(z.object({ id: z.number().positive() }))
-    .query(({ ctx, input }) => {
+    .query(async ({ ctx, input }) => {
       return ctx.prisma.items.findFirstOrThrow({
         where: {
           id: input.id,
