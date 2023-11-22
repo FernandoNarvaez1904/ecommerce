@@ -1,6 +1,6 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import { MainNavigationStack, MainNavigationStackParams } from "../_app";
-import { ActivityIndicator, Image, Text, View } from "react-native";
+import { Image, Text, View } from "react-native";
 import { trpc } from "../utils/trpc";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect } from "react";
