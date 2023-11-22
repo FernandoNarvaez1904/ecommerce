@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { FlatList, Text, View, Image, TextInput } from "react-native";
+import { FlatList, View, TextInput } from "react-native";
 import { trpc } from "../utils/trpc";
 import ProductCard from "../components/ProductCard";
 
