@@ -28,7 +28,11 @@ function App() {
           animation: "slide_from_bottom",
         }}
       >
-        <Stack.Screen name="HomeScreen" component={HomeScreen} />
+        <Stack.Screen
+          name="HomeScreen"
+          component={HomeScreen}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen name="SingleItemScreen" component={SingleItemScreen} />
       </Stack.Navigator>
     </Providers>
