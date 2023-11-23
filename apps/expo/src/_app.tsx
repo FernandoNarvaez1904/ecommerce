@@ -9,6 +9,7 @@ import { TRPCProvider } from "./utils/trpc";
 import { NavigationContainer, NavigationProp } from "@react-navigation/native";
 import SingleItemScreen from "./screens/single-item";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Provider } from "jotai";
 
 export type MainNavigationStackParams = {
   HomeScreen: undefined;
@@ -46,7 +47,9 @@ function Providers({ children }: { children: ReactNode }) {
       tokenCache={tokenCache}
     >
       <TRPCProvider>
-        <NavigationContainer>{children}</NavigationContainer>
+        <Provider>
+          <NavigationContainer>{children}</NavigationContainer>
+        </Provider>
       </TRPCProvider>
     </ClerkProvider>
   );

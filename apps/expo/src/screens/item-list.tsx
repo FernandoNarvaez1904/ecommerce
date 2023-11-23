@@ -1,10 +1,13 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { FlatList, View, TextInput } from "react-native";
 import { trpc } from "../utils/trpc";
 import ProductCard from "../components/ProductCard";
+import { useSetAtom } from "jotai";
+import { productsAtom } from "../atoms/products";
 
 function ItemListScreen() {
   const { data } = trpc.item.all.useQuery();
+  const setProductsAtom = useSetAtom(productsAtom);
 
   const [nameFilter, setNameFilter] = useState("");
 
@@ -15,6 +18,12 @@ function ItemListScreen() {
       ) ?? [],
     [nameFilter, data],
   );
+
+  useEffect(() => {
+    if (data) {
+      setProductsAtom(data);
+    }
+  }, [data]);
 
   return (
     <View className="flex-1 bg-gray-50 px-2">

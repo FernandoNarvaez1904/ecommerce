@@ -4,6 +4,8 @@ import { Image, Text, View } from "react-native";
 import { trpc } from "../utils/trpc";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect } from "react";
+import { useAtomValue } from "jotai";
+import { singleProductAtomFamily } from "../atoms/products";
 
 export type SingleItemScreenProps = StackScreenProps<
   MainNavigationStackParams,
@@ -12,17 +14,25 @@ export type SingleItemScreenProps = StackScreenProps<
 
 function SingleItemScreen({ route }: SingleItemScreenProps) {
   const nav = useNavigation<MainNavigationStack>();
-  const { data } = trpc.item.byId.useQuery({ id: route.params.id });
+  const item = useAtomValue(singleProductAtomFamily(route.params.id));
 
   useEffect(() => {
-    nav.setOptions({ title: data?.name ?? "Loading Item" });
-  }, [data?.name]);
+    nav.setOptions({ title: item?.name ?? "Loading Item" });
+  }, [item?.name]);
+
+  if (!item) {
+    return (
+      <Text className="mt-4 self-center">
+        Item with id: {route.params.id} does not exist
+      </Text>
+    );
+  }
 
   return (
     <View className="h-full bg-white px-2 pt-4">
-      {data?.image_url ? (
+      {item?.image_url ? (
         <Image
-          source={{ uri: data?.image_url }}
+          source={{ uri: item?.image_url }}
           resizeMode="contain"
           className="h-48 "
         />
@@ -36,8 +46,8 @@ function SingleItemScreen({ route }: SingleItemScreenProps) {
         <View>
           <Text className="text-lg font-semibold">
             Price:
-            {data?.price ? (
-              <Text className="font-normal"> C$ {data.price.toNumber()}</Text>
+            {item?.price ? (
+              <Text className="font-normal"> C$ {item.price.toNumber()}</Text>
             ) : (
               <Text className="text-base font-normal">Free</Text>
             )}
@@ -46,10 +56,10 @@ function SingleItemScreen({ route }: SingleItemScreenProps) {
         <View>
           <Text className="text-lg font-semibold">
             Stock:
-            {data?.stock ? (
+            {item?.stock ? (
               <Text className="font-normal">
                 {" "}
-                {data.stock.toNumber().toFixed(2)}
+                {item.stock.toNumber().toFixed(2)}
               </Text>
             ) : (
               <Text className="text-base font-normal">0.00</Text>
@@ -59,8 +69,8 @@ function SingleItemScreen({ route }: SingleItemScreenProps) {
         <View>
           <Text className="text-lg font-semibold">Description:</Text>
 
-          {data?.description ? (
-            <Text className="text-lg">{data?.description}</Text>
+          {item?.description ? (
+            <Text className="text-lg">{item?.description}</Text>
           ) : (
             <Text className="text-lg  text-gray-500">
               There is no description available
