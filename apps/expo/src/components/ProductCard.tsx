@@ -3,7 +3,6 @@ import { useNavigation } from "@react-navigation/native";
 import type { inferProcedureOutput } from "@trpc/server";
 import { memo } from "react";
 import { View, Image, Text, TouchableOpacity } from "react-native";
-import { MainNavigationStack } from "../_app";
 
 export interface ProductCardProps {
   item: inferProcedureOutput<AppRouter["item"]["byId"]>;
@@ -11,7 +10,7 @@ export interface ProductCardProps {
 
 function ProductCard({ item }: ProductCardProps) {
   const hasStock = item.stock.greaterThan(0);
-  const navigator = useNavigation<MainNavigationStack>();
+  const navigator = useNavigation();
 
   return (
     <TouchableOpacity

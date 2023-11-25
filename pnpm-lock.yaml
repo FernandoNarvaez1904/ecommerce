@@ -52,6 +52,9 @@ importers:
       '@hookform/resolvers':
         specifier: ^3.3.2
         version: 3.3.2(react-hook-form@7.48.2)
+      '@react-native-async-storage/async-storage':
+        specifier: ^1.19.8
+        version: 1.19.8(react-native@0.70.5)
       '@react-navigation/bottom-tabs':
         specifier: ^6.5.11
         version: 6.5.11(@react-navigation/native@6.1.9)(react-native-safe-area-context@4.5.0)(react-native-screens@3.20.0)(react-native@0.70.5)(react@18.2.0)
@@ -2613,6 +2616,15 @@ packages:
   /@prisma/engines@5.6.0:
     resolution: {integrity: sha512-Mt2q+GNJpU2vFn6kif24oRSBQv1KOkYaterQsi0k2/lA+dLvhRX6Lm26gon6PYHwUM8/h8KRgXIUMU0PCLB6bw==}
     requiresBuild: true
+
+  /@react-native-async-storage/async-storage@1.19.8(react-native@0.70.5):
+    resolution: {integrity: sha512-O25eaSbmH+LEmOobkpwf43bAGIkqE9YGzfWcirTszI90xk4ItaDWpgJsQx9LeAbeAKzVkn1h+Nq5Bo6I6q2oFA==}
+    peerDependencies:
+      react-native: ^0.0.0-0 || >=0.60 <1.0
+    dependencies:
+      merge-options: 3.0.4
+      react-native: 0.70.5(patch_hash=rnbco5eodjkfp6ucueusre3z4i)(@babel/core@7.20.5)(@babel/preset-env@7.20.2)(react@18.2.0)
+    dev: false
 
   /@react-native-community/cli-clean@9.2.1:
     resolution: {integrity: sha512-dyNWFrqRe31UEvNO+OFWmQ4hmqA07bR9Ief/6NnGwx67IO9q83D5PEAf/o96ML6jhSbDwCmpPKhPwwBbsyM3mQ==}
@@ -6484,6 +6496,11 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: false
 
+  /is-plain-obj@2.1.0:
+    resolution: {integrity: sha512-YWnfyRwxL/+SsrWYfOpUtz5b3YD+nyfkHvjbcanzk8zgyO4ASD67uVMRt8k5bM4lLMDnXfriRhOpemw+NfT1eA==}
+    engines: {node: '>=8'}
+    dev: false
+
   /is-plain-object@2.0.4:
     resolution: {integrity: sha512-h5PpgXkWitc38BBMYawTYMWJHFZJVnBquFE57xFpjB8pJFiF6gZ+bU+WyI/yqXiFR5mdLsgYNaPe8uao6Uv9Og==}
     engines: {node: '>=0.10.0'}
@@ -7058,6 +7075,13 @@ packages:
 
   /memory-cache@0.2.0:
     resolution: {integrity: sha512-OcjA+jzjOYzKmKS6IQVALHLVz+rNTMPoJvCztFaZxwG14wtAW7VRZjwTQu06vKCYOxh4jVnik7ya0SXTB0W+xA==}
+    dev: false
+
+  /merge-options@3.0.4:
+    resolution: {integrity: sha512-2Sug1+knBjkaMsMgf1ctR1Ujx+Ayku4EdJN4Z+C2+JzoeF7A3OZ9KM2GY0CpQS51NR61LTurMJrRKPhSs3ZRTQ==}
+    engines: {node: '>=10'}
+    dependencies:
+      is-plain-obj: 2.1.0
     dev: false
 
   /merge-stream@2.0.0:

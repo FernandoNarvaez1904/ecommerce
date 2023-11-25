@@ -1,22 +1,24 @@
-import { StackScreenProps } from "@react-navigation/stack";
-import { MainNavigationStack, MainNavigationStackParams } from "../_app";
-import { Image, Text, View } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { Image, Pressable, Text, View } from "react-native";
 import { useEffect } from "react";
-import { useAtomValue } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { singleProductAtomFamily } from "../atoms/products";
+import { addItemToCartAtom, cartItemQuantityAtomFamily } from "../atoms/cart";
+import type { RootStackScreenProps } from "../navigation/types";
 
-export type SingleItemScreenProps = StackScreenProps<
-  MainNavigationStackParams,
-  "SingleItemScreen"
->;
-
-function SingleItemScreen({ route }: SingleItemScreenProps) {
-  const nav = useNavigation<MainNavigationStack>();
+function SingleItemScreen({
+  route,
+  navigation,
+}: RootStackScreenProps<"SingleItemScreen">) {
   const item = useAtomValue(singleProductAtomFamily(route.params.id));
+  const cartQuantity = useAtomValue(
+    cartItemQuantityAtomFamily(route.params.id),
+  );
+  const addToCart = useSetAtom(
+    addItemToCartAtom({ id: route.params.id, quantity: 1 }),
+  );
 
   useEffect(() => {
-    nav.setOptions({ title: item?.name ?? "Loading Item" });
+    navigation.setOptions({ title: item?.name ?? "Loading Item" });
   }, [item?.name]);
 
   if (!item) {
@@ -61,8 +63,14 @@ function SingleItemScreen({ route }: SingleItemScreenProps) {
                 {item.stock.toNumber().toFixed(2)}
               </Text>
             ) : (
-              <Text className="text-base font-normal">0.00</Text>
+              <Text className="text-base font-normal"> 0.00</Text>
             )}
+          </Text>
+        </View>
+        <View>
+          <Text className="text-lg font-semibold">
+            In Cart:
+            <Text className="font-normal"> {cartQuantity.toFixed(2)}</Text>
           </Text>
         </View>
         <View>
@@ -77,6 +85,22 @@ function SingleItemScreen({ route }: SingleItemScreenProps) {
           )}
         </View>
       </View>
+      <Pressable
+        className="mt-2.5 rounded bg-emerald-500  p-2 active:bg-emerald-600"
+        onPress={() => addToCart()}
+      >
+        <Text className="self-center text-base font-medium text-white">
+          Add to cart
+        </Text>
+      </Pressable>
+      <Pressable
+        className="mt-2.5 rounded  border-2  border-emerald-500 p-2"
+        onPress={() => navigation.navigate("HomeScreen", { screen: "Cart" })}
+      >
+        <Text className="self-center text-base font-medium text-emerald-700">
+          Go to cart
+        </Text>
+      </Pressable>
     </View>
   );
 }

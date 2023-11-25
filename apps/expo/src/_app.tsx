@@ -6,19 +6,13 @@ import { tokenCache } from "./utils/cache";
 import Constants from "expo-constants";
 import HomeScreen from "./screens/home";
 import { TRPCProvider } from "./utils/trpc";
-import { NavigationContainer, NavigationProp } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import SingleItemScreen from "./screens/single-item";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Provider } from "jotai";
+import type { RootStackParamList } from "./navigation/types";
 
-export type MainNavigationStackParams = {
-  HomeScreen: undefined;
-  SingleItemScreen: { id: number };
-};
-
-export type MainNavigationStack = NavigationProp<MainNavigationStackParams>;
-
-const Stack = createNativeStackNavigator<MainNavigationStackParams>();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function App() {
   return (
