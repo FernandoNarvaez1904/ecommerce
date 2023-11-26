@@ -1,7 +1,7 @@
 import { useAtom, useAtomValue } from "jotai";
 import { cartAtom, cartTotalAtom } from "../atoms/cart";
 import CartItem from "../components/CartItem";
-import { Image, Pressable, Text, View } from "react-native";
+import { ActivityIndicator, Image, Pressable, Text, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { useMemo } from "react";
 import { HomeTabScreenProps } from "../types/navigation";
@@ -60,6 +60,7 @@ function CartHeader({
   const total = useAtomValue(cartTotalAtom);
   const [cart, setCart] = useAtom(cartAtom);
   const { mutate, isLoading } = trpc.order.create.useMutation();
+  const trpcUtils = trpc.useContext();
 
   const onCreateOrder = () => {
     const cartEntries = Object.entries(cart).map(([key, value]) => ({
@@ -74,6 +75,7 @@ function CartHeader({
       };
       mutate(input, {
         onSuccess: () => {
+          trpcUtils.item.all.invalidate();
           setCart({});
         },
       });
@@ -87,12 +89,20 @@ function CartHeader({
         {total.toFixed(2)}
       </Text>
       <Pressable
-        className="rounded bg-emerald-500 p-1.5 active:bg-emerald-600"
+        className="w-18 rounded bg-emerald-500 p-2 active:bg-emerald-600"
         onPress={!isSignedIn ? () => navigation.push("Sign In") : onCreateOrder}
         disabled={isLoading}
       >
         <Text className="text-white">
-          {isSignedIn ? "Create Order" : "Log In to Buy"}
+          {isLoading ? (
+            <ActivityIndicator
+              color={"white"}
+              className="w-18 px-8"
+              size={"small"}
+            />
+          ) : (
+            <>{isSignedIn ? "Create Order" : "Log In to Buy"}</>
+          )}
         </Text>
       </Pressable>
     </View>
