@@ -1,5 +1,5 @@
 import { Image, Pressable, Text, View } from "react-native";
-import { useEffect } from "react";
+import { memo, useEffect } from "react";
 import { useAtomValue, useSetAtom } from "jotai";
 import { singleProductAtomFamily } from "../atoms/products";
 import { addItemToCartAtom, cartItemQuantityAtomFamily } from "../atoms/cart";
@@ -88,37 +88,43 @@ function SingleItemScreen({
         </View>
       </View>
 
-      <Pressable
-        className="mt-2.5 rounded bg-emerald-500  p-2 active:bg-emerald-600"
-        onPress={() => addToCart()}
-      >
-        <Text className="self-center text-base font-medium text-white">
-          Add to cart
-        </Text>
-      </Pressable>
+      {item.stock.toNumber() !== 0 && (
+        <>
+          <Pressable
+            className="mt-2.5 rounded bg-emerald-500  p-2 active:bg-emerald-600 disabled:bg-emerald-100"
+            onPress={() => addToCart()}
+          >
+            <Text className="self-center text-base font-medium text-white">
+              Add to cart
+            </Text>
+          </Pressable>
 
-      {user?.publicMetadata.isAdmin && (
-        <Pressable
-          className="mt-2.5 rounded bg-cyan-500  p-2 active:bg-cyan-600"
-          onPress={() =>
-            navigation.push("Update Item", { id: route.params.id })
-          }
-        >
-          <Text className="self-center text-base font-medium text-white">
-            Update Item
-          </Text>
-        </Pressable>
+          {user?.publicMetadata.isAdmin && (
+            <Pressable
+              className="mt-2.5 rounded bg-cyan-500  p-2 active:bg-cyan-600"
+              onPress={() =>
+                navigation.push("Update Item", { id: route.params.id })
+              }
+            >
+              <Text className="self-center text-base font-medium text-white">
+                Update Item
+              </Text>
+            </Pressable>
+          )}
+          <Pressable
+            className="mt-2.5 rounded  border-2  border-emerald-500 p-2"
+            onPress={() =>
+              navigation.navigate("HomeScreen", { screen: "Cart" })
+            }
+          >
+            <Text className="self-center text-base font-medium text-emerald-700">
+              Go to cart
+            </Text>
+          </Pressable>
+        </>
       )}
-      <Pressable
-        className="mt-2.5 rounded  border-2  border-emerald-500 p-2"
-        onPress={() => navigation.navigate("HomeScreen", { screen: "Cart" })}
-      >
-        <Text className="self-center text-base font-medium text-emerald-700">
-          Go to cart
-        </Text>
-      </Pressable>
     </View>
   );
 }
 
-export default SingleItemScreen;
+export default memo(SingleItemScreen);
