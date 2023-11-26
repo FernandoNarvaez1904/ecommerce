@@ -53,9 +53,10 @@ function SignUpForm() {
       <Text className="mb-2.5 self-center text-lg font-medium">Sign Up</Text>
 
       {formState.errors.root && (
-        <BannerError className="mb-2.5">
-          {formState.errors.root?.message}
-        </BannerError>
+        <BannerError
+          className="mb-2.5"
+          error={formState.errors.root?.message}
+        />
       )}
 
       <View className="mb-2.5">
