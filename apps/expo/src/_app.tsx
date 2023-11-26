@@ -13,6 +13,7 @@ import { Provider } from "jotai";
 import type { RootStackParamList } from "./types/navigation";
 import CreateItemScreen from "./screens/create-item";
 import jotaiStore from "./atoms/store";
+import UpdateItemScreen from "./screens/update-item";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -43,6 +44,7 @@ function RootNavigator() {
       {user?.publicMetadata.isAdmin && (
         <>
           <Stack.Screen name="Create Item" component={CreateItemScreen} />
+          <Stack.Screen name="Update Item" component={UpdateItemScreen} />
         </>
       )}
     </Stack.Navigator>

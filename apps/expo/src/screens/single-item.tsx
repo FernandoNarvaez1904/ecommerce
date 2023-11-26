@@ -4,6 +4,7 @@ import { useAtomValue, useSetAtom } from "jotai";
 import { singleProductAtomFamily } from "../atoms/products";
 import { addItemToCartAtom, cartItemQuantityAtomFamily } from "../atoms/cart";
 import type { RootStackScreenProps } from "../types/navigation";
+import { useUser } from "@clerk/clerk-expo";
 
 function SingleItemScreen({
   route,
@@ -16,6 +17,7 @@ function SingleItemScreen({
   const addToCart = useSetAtom(
     addItemToCartAtom({ id: route.params.id, quantity: 1 }),
   );
+  const { user } = useUser();
 
   useEffect(() => {
     navigation.setOptions({ title: item?.name ?? "Loading Item" });
@@ -85,6 +87,7 @@ function SingleItemScreen({
           )}
         </View>
       </View>
+
       <Pressable
         className="mt-2.5 rounded bg-emerald-500  p-2 active:bg-emerald-600"
         onPress={() => addToCart()}
@@ -93,6 +96,19 @@ function SingleItemScreen({
           Add to cart
         </Text>
       </Pressable>
+
+      {user?.publicMetadata.isAdmin && (
+        <Pressable
+          className="mt-2.5 rounded bg-cyan-500  p-2 active:bg-cyan-600"
+          onPress={() =>
+            navigation.push("Update Item", { id: route.params.id })
+          }
+        >
+          <Text className="self-center text-base font-medium text-white">
+            Update Item
+          </Text>
+        </Pressable>
+      )}
       <Pressable
         className="mt-2.5 rounded  border-2  border-emerald-500 p-2"
         onPress={() => navigation.navigate("HomeScreen", { screen: "Cart" })}

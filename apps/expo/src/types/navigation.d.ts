@@ -9,6 +9,7 @@ export type RootStackParamList = {
   HomeScreen: NavigatorScreenParams<HomeTabParamList>;
   SingleItemScreen: { id: number };
   "Create Item": undefined;
+  "Update Item": { id: number };
 };
 
 export type RootStackScreenProps<T extends keyof RootStackParamList> =
