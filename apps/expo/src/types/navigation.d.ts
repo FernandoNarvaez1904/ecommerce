@@ -8,6 +8,7 @@ import { StackScreenProps } from "@react-navigation/stack";
 export type RootStackParamList = {
   HomeScreen: NavigatorScreenParams<HomeTabParamList>;
   SingleItemScreen: { id: number };
+  "Create Item": undefined;
 };
 
 export type RootStackScreenProps<T extends keyof RootStackParamList> =
