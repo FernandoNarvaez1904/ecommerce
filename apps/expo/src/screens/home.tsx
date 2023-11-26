@@ -5,8 +5,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useAtomValue } from "jotai";
 import { cartAtom } from "../atoms/cart";
 import CartItem from "../components/CartItem";
+import { HomeTabParamList } from "../types/navigation";
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<HomeTabParamList>();
 
 function HomeScreen() {
   return (
