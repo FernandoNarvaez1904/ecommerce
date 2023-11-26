@@ -1,25 +1,23 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-generator client {
-    provider = "prisma-client-js"
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
 }
 
-datasource db {
-    provider = "sqlite"
-    url      = env("DATABASE_URL")
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["rhel-openssl-1.0.x"]
 }
 
 model Items {
-  id                Int                 @id @default(autoincrement())
-  name              String              @unique
-  description       String?
-  price             Decimal             @default(0)
-  stock             Decimal             @default(0)
-  image_url         String?
-  category          Categories?         @relation(name: "CategoriesToItems", fields: [categoryId], references: [id])
-  categoryId        Int?
-  shoppingcartitems ShoppingCartItems[] @relation(name: "ItemsToShoppingCartItems")
+  id          Int          @id @default(autoincrement())
+  name        String       @unique
+  description String?
+  price       Decimal      @default(0)
+  stock       Decimal      @default(0)
+  image_url   String?
+  category    Categories?  @relation(name: "CategoriesToItems", fields: [categoryId], references: [id])
+  categoryId  Int?
+  orderitems  OrderItems[] @relation(name: "ItemsToOrderItems")
 }
 
 model Categories {
@@ -28,10 +26,39 @@ model Categories {
   items Items[] @relation(name: "CategoriesToItems")
 }
 
-model ShoppingCartItems {
+model Orders {
+  id            Int          @id @default(autoincrement())
+  status        String
+  user_id       String
+  creation_date DateTime?    @default(now())
+  updated_at    DateTime     @updatedAt
+  total         Decimal
+  orderitems    OrderItems[] @relation(name: "OrdersToOrderItems")
+  payments      Payments[]   @relation(name: "OrdersToPayments")
+}
+
+model OrderItems {
   id       Int     @id @default(autoincrement())
-  user_id  String
+  name     String
+  price    Decimal
   quantity Decimal
-  item     Items   @relation(name: "ItemsToShoppingCartItems", fields: [itemId], references: [id])
-  itemId   Int
+  order    Orders  @relation(name: "OrdersToOrderItems", fields: [orderId], references: [id])
+  orderId  Int
+  item     Items?  @relation(name: "ItemsToOrderItems", fields: [itemId], references: [id])
+  itemId   Int?
+}
+
+model PaymentMethod {
+  id       Int        @id @default(autoincrement())
+  name     String
+  payments Payments[] @relation(name: "PaymentMethodToPayments")
+}
+
+model Payments {
+  id                Int           @id @default(autoincrement())
+  amount            Decimal
+  order             Orders        @relation(name: "OrdersToPayments", fields: [orderId], references: [id])
+  orderId           Int
+  payment_methods   PaymentMethod @relation(name: "PaymentMethodToPayments", fields: [payment_methodsId], references: [id])
+  payment_methodsId Int
 }
