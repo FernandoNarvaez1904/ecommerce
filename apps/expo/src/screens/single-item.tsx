@@ -88,6 +88,19 @@ function SingleItemScreen({
         </View>
       </View>
 
+      {user?.publicMetadata.isAdmin && (
+        <Pressable
+          className="mt-2.5 rounded bg-cyan-500  p-2 active:bg-cyan-600"
+          onPress={() =>
+            navigation.push("Update Item", { id: route.params.id })
+          }
+        >
+          <Text className="self-center text-base font-medium text-white">
+            Update Item
+          </Text>
+        </Pressable>
+      )}
+
       {item.stock.toNumber() !== 0 && (
         <>
           <Pressable
@@ -98,19 +111,6 @@ function SingleItemScreen({
               Add to cart
             </Text>
           </Pressable>
-
-          {user?.publicMetadata.isAdmin && (
-            <Pressable
-              className="mt-2.5 rounded bg-cyan-500  p-2 active:bg-cyan-600"
-              onPress={() =>
-                navigation.push("Update Item", { id: route.params.id })
-              }
-            >
-              <Text className="self-center text-base font-medium text-white">
-                Update Item
-              </Text>
-            </Pressable>
-          )}
           <Pressable
             className="mt-2.5 rounded  border-2  border-emerald-500 p-2"
             onPress={() =>
