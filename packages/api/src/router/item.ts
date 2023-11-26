@@ -59,7 +59,7 @@ export const itemRouter = router({
       z.object({
         id: z.number().positive(),
         name: z.string().optional(),
-        price: z.number().positive().optional(),
+        price: z.number().nonnegative().optional(),
         stock: z.number().optional(),
         categoryId: z.number().positive().optional(),
         description: z.string().optional(),
