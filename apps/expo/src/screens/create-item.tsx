@@ -41,6 +41,7 @@ function CreateItemScreen({ navigation }: RootStackScreenProps<"Create Item">) {
         name: vals.name,
         price: Number(vals.price),
         stock: Number(vals.stock),
+        description: vals.description,
       },
       {
         onError: (err) => {
@@ -115,6 +116,22 @@ function CreateItemScreen({ navigation }: RootStackScreenProps<"Create Item">) {
               placeholder="0.00"
               error={formState.errors.stock?.message}
               keyboardType="numeric"
+            />
+          )}
+        />
+        <Text>Description</Text>
+        <Controller
+          control={control}
+          name="description"
+          render={({ field: { onBlur, onChange, value } }) => (
+            <TextInput
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              placeholder="To do some Heating, processor m2, etc."
+              error={formState.errors.name?.message}
+              multiline
+              className="pr-3"
             />
           )}
         />
