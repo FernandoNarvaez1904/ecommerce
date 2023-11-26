@@ -5,6 +5,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import TextInput from "../core/TextInput";
 import { useState } from "react";
+import BannerError from "../core/BannerError";
 
 const signInFormValidator = z.object({
   email: z.string().email(),
@@ -49,9 +50,9 @@ function SignInForm() {
       <Text className="mb-2.5 self-center text-lg font-medium">Sign In</Text>
 
       {formState.errors.root && (
-        <Text className="mb-2.5 rounded border border-red-200 bg-red-50 p-2 text-center text-sm font-medium text-red-800">
+        <BannerError className="mb-2.5">
           {formState.errors.root?.message}
-        </Text>
+        </BannerError>
       )}
 
       <View className="mb-2.5">
