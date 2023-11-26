@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useAtomValue, useSetAtom } from "jotai";
 import { singleProductAtomFamily } from "../atoms/products";
 import { addItemToCartAtom, cartItemQuantityAtomFamily } from "../atoms/cart";
-import type { RootStackScreenProps } from "../navigation/types";
+import type { RootStackScreenProps } from "../types/navigation";
 
 function SingleItemScreen({
   route,
