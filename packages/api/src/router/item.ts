@@ -35,9 +35,9 @@ export const itemRouter = router({
     .input(
       z.object({
         name: z.string(),
-        price: z.number().positive(),
+        price: z.number().nonnegative(),
         stock: z.number(),
-        categoryId: z.number().positive(),
+        categoryId: z.number().positive().optional(),
         description: z.string().optional(),
       }),
     )
