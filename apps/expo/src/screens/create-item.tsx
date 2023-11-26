@@ -126,9 +126,7 @@ function CreateItemScreen({ navigation }: RootStackScreenProps<"Create Item">) {
           {isLoading ? (
             <ActivityIndicator color={"white"} className="self-center" />
           ) : (
-            <Text className="self-center font-medium text-white">
-              Agregar Item
-            </Text>
+            <Text className="self-center font-medium text-white">Add Item</Text>
           )}
         </Pressable>
       </View>
