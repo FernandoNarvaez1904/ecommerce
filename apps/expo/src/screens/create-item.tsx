@@ -129,7 +129,7 @@ function CreateItemScreen({ navigation }: RootStackScreenProps<"Create Item">) {
               onChangeText={onChange}
               value={value}
               placeholder="To do some Heating, processor m2, etc."
-              error={formState.errors.name?.message}
+              error={formState.errors.description?.message}
               multiline
               className="pr-3"
             />
