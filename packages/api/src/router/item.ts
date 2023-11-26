@@ -43,7 +43,13 @@ export const itemRouter = router({
     )
     .mutation(({ ctx, input }) => {
       return ctx.prisma.items.create({
-        data: input,
+        data: {
+          name: input.name,
+          price: input.price,
+          stock: input.stock,
+          description: input.description,
+          categoryId: input.categoryId
+        },
         include: {
           category: {
             select: {

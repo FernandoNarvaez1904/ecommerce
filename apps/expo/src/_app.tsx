@@ -14,6 +14,7 @@ import type { RootStackParamList } from "./types/navigation";
 import CreateItemScreen from "./screens/create-item";
 import jotaiStore from "./atoms/store";
 import UpdateItemScreen from "./screens/update-item";
+import AuthenticationScreenModal from "./screens/auth-modal";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -26,7 +27,7 @@ function App() {
 }
 
 function RootNavigator() {
-  const { user } = useUser();
+  const { user, isSignedIn } = useUser();
 
   return (
     <Stack.Navigator
@@ -35,18 +36,32 @@ function RootNavigator() {
         animation: "slide_from_bottom",
       }}
     >
-      <Stack.Screen
-        name="HomeScreen"
-        component={HomeScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen name="SingleItemScreen" component={SingleItemScreen} />
-      {user?.publicMetadata.isAdmin && (
-        <>
-          <Stack.Screen name="Create Item" component={CreateItemScreen} />
-          <Stack.Screen name="Update Item" component={UpdateItemScreen} />
-        </>
-      )}
+      <Stack.Group>
+        <Stack.Screen
+          name="HomeScreen"
+          component={HomeScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen name="SingleItemScreen" component={SingleItemScreen} />
+        {user?.publicMetadata.isAdmin && (
+          <>
+            <Stack.Screen name="Create Item" component={CreateItemScreen} />
+            <Stack.Screen name="Update Item" component={UpdateItemScreen} />
+          </>
+        )}
+      </Stack.Group>
+
+      <Stack.Group
+        screenOptions={{
+          presentation: "transparentModal",
+          headerShown: false,
+          animation: "fade_from_bottom",
+        }}
+      >
+        {!isSignedIn && (
+          <Stack.Screen name="Sign In" component={AuthenticationScreenModal} />
+        )}
+      </Stack.Group>
     </Stack.Navigator>
   );
 }

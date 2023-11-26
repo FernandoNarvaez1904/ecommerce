@@ -10,6 +10,7 @@ export type RootStackParamList = {
   SingleItemScreen: { id: number };
   "Create Item": undefined;
   "Update Item": { id: number };
+  "Sign In": undefined;
 };
 
 export type RootStackScreenProps<T extends keyof RootStackParamList> =

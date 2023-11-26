@@ -4,6 +4,7 @@ import { Image, Pressable, Text, View } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { addItemToCartAtom, deleteItemFromCartAtom } from "../atoms/cart";
 import { memo } from "react";
+import { useNavigation } from "@react-navigation/native";
 
 function CartItem({ id, quantity }: { id: number; quantity: number }) {
   const item = useAtomValue(singleProductAtomFamily(id));
@@ -11,10 +12,15 @@ function CartItem({ id, quantity }: { id: number; quantity: number }) {
   const addItemToCart = useSetAtom(addItemToCartAtom({ id, quantity: 1 }));
   const removeItemToCart = useSetAtom(addItemToCartAtom({ id, quantity: -1 }));
 
+  const navigation = useNavigation();
+
   return (
     <View className="flex flex-row items-center justify-between rounded border border-gray-200 bg-white  shadow">
-      <View className="w-2/3 flex-row items-center p-2">
-        <Text className="mr-2 text-lg" numberOfLines={1}>
+      <Pressable
+        className="w-2/3 flex-row items-center p-2"
+        onPress={() => navigation.navigate("SingleItemScreen", { id: id })}
+      >
+        <Text className="mr-2  text-base" numberOfLines={1}>
           {quantity}
         </Text>
         <Image
@@ -34,7 +40,7 @@ function CartItem({ id, quantity }: { id: number; quantity: number }) {
             C$ {(item?.price.toNumber() ?? 0) * quantity}
           </Text>
         </View>
-      </View>
+      </Pressable>
 
       <View className="flex h-full  w-1/3 flex-grow flex-row">
         <Pressable
