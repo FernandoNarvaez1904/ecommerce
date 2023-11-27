@@ -1,59 +1,49 @@
-import React, { useMemo, useState } from "react";
-import { FlatList, Text, View, Image, TextInput } from "react-native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import ItemListScreen from "./item-list";
+import ProfileScreen from "./profile";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { trpc } from "../utils/trpc";
-import { inferProcedureOutput } from "@trpc/server";
-import { AppRouter } from "@acme/api";
+import { HomeTabParamList } from "../types/navigation";
+import CartListScreen from "./cart-list";
+import Ionicons from "@expo/vector-icons/Ionicons";
+
+const Tab = createBottomTabNavigator<HomeTabParamList>();
 
 function HomeScreen() {
-  const { data } = trpc.item.all.useQuery();
-
-  const [nameFilter, setNameFilter] = useState("");
-
-  const filteredData = useMemo(
-    () =>
-      data?.filter((item) =>
-        item.name.toLowerCase().includes(nameFilter.toLocaleLowerCase()),
-      ) ?? [],
-    [nameFilter, data],
-  );
-
   return (
-    <SafeAreaView className="px-2">
-      <TextInput
-        className="my-2 rounded border py-1 pl-3"
-        placeholder="Busca un Producto"
-        onChangeText={setNameFilter}
-      />
-      <FlatList
-        data={filteredData}
-        renderItem={(item) => (
-          <View className="w-[49%]">
-            <ProductCard item={item.item} key={item.item.id} />
-          </View>
-        )}
-        ItemSeparatorComponent={() => <View className="h-2 w-[2%]" />}
-        numColumns={2}
-        columnWrapperStyle={{ justifyContent: "space-between" }}
-      />
+    <SafeAreaView className="h-full">
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          headerShown: false,
+          tabBarShowLabel: false,
+        })}
+      >
+        <Tab.Screen
+          name="Search"
+          component={ItemListScreen}
+          options={{
+            tabBarIcon: (props) => (
+              <Ionicons name="search-outline" {...props} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Cart"
+          component={CartListScreen}
+          options={{
+            tabBarIcon: (props) => <Ionicons name="cart-outline" {...props} />,
+          }}
+        />
+        <Tab.Screen
+          name="My Profile"
+          component={ProfileScreen}
+          options={{
+            tabBarIcon: (props) => (
+              <Ionicons name="person-outline" {...props} />
+            ),
+          }}
+        />
+      </Tab.Navigator>
     </SafeAreaView>
-  );
-}
-
-export interface ProductCardProps {
-  item: inferProcedureOutput<AppRouter["item"]["byId"]>;
-}
-
-function ProductCard({ item }: ProductCardProps) {
-  return (
-    <View className="rounded border border-gray-400 px-2 py-2">
-      <Image
-        source={{ uri: item.image_url ?? "" }}
-        className="h-16"
-        resizeMode="contain"
-      />
-      <Text numberOfLines={1}>{item.name}</Text>
-    </View>
   );
 }
 

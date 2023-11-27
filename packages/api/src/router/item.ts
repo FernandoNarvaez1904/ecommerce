@@ -16,7 +16,7 @@ export const itemRouter = router({
 
   byId: publicProcedure
     .input(z.object({ id: z.number().positive() }))
-    .query(({ ctx, input }) => {
+    .query(async ({ ctx, input }) => {
       return ctx.prisma.items.findFirstOrThrow({
         where: {
           id: input.id,
@@ -35,15 +35,21 @@ export const itemRouter = router({
     .input(
       z.object({
         name: z.string(),
-        price: z.number().positive(),
+        price: z.number().nonnegative(),
         stock: z.number(),
-        categoryId: z.number().positive(),
+        categoryId: z.number().positive().optional(),
         description: z.string().optional(),
       }),
     )
     .mutation(({ ctx, input }) => {
       return ctx.prisma.items.create({
-        data: input,
+        data: {
+          name: input.name,
+          price: input.price,
+          stock: input.stock,
+          description: input.description,
+          categoryId: input.categoryId
+        },
         include: {
           category: {
             select: {
@@ -59,7 +65,7 @@ export const itemRouter = router({
       z.object({
         id: z.number().positive(),
         name: z.string().optional(),
-        price: z.number().positive().optional(),
+        price: z.number().nonnegative().optional(),
         stock: z.number().optional(),
         categoryId: z.number().positive().optional(),
         description: z.string().optional(),
