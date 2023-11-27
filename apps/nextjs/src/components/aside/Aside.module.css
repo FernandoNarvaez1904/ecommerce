@@ -1,0 +1,16 @@
+.aside {
+  background-color: lightgray;
+  width: 20%;
+  height: 100;
+  padding: 1.5em;
+}
+.aside h2 {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.aside li {
+  padding: 3px;
+}
+.aside li:hover {
+  background-color: gray;
+}

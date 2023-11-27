@@ -1,0 +1,63 @@
+.content {
+  margin-left: 20%;
+  margin-right: 20%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10%;
+}
+figure .image {
+}
+.imageWrapper {
+  width: 500px;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  border: 1px solid black;
+}
+.itemName {
+  font-weight: bold;
+  font-size: xx-large;
+}
+.content section {
+  margin-left: 25px;
+}
+.itemInfo p {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.itemInfo label {
+  margin-top: 10px;
+}
+.itemInfo {
+  font-size: large;
+}
+.quantity {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.quantityBox {
+  width: 80px;
+  margin-top: 10px;
+}
+.quantityInput {
+  width: 80px;
+  height: 36px;
+  font-size: 30px;
+  text-align: center;
+  outline: none;
+  border: 1px solid black;
+}
+.buttonDiv {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.buttonDiv button {
+  margin-bottom: 10px;
+  background-color: lightgray;
+  width: 150px;
+  border-radius: 5px;
+}
+.buttonDiv button:active {
+  background-color: gray;
+}

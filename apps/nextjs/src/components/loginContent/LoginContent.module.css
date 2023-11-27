@@ -1,0 +1,45 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 15%;
+  margin-left: 30%;
+  margin-right: 30%;
+  height: 400px;
+  background-color: rgb(229, 236, 238);
+  padding: 25px;
+  border-radius: 5px;
+}
+.container h1 {
+  font-size: xx-large;
+  text-align: center;
+  margin-top: 0.7em;
+}
+.container form {
+  display: flex;
+  flex-direction: column;
+}
+.container form label {
+  font-size: large;
+  margin-bottom: 5px;
+}
+.container form input {
+  height: 40px;
+  border-radius: 3px;
+  padding-left: 10px;
+  margin-bottom: 5px;
+}
+.container button {
+  height: 40px;
+  background-color: rgb(211, 211, 211);
+  border-radius: 3px;
+}
+.container button:active {
+  background-color: darkgrey;
+}
+.container p {
+  text-align: center;
+}
+.container p a {
+  color: rgb(64, 64, 241);
+}

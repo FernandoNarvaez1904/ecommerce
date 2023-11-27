@@ -1,0 +1,45 @@
+.container {
+  display: flex;
+}
+.container main {
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.card {
+  width: 20%;
+  margin: 30px;
+  border: 3px solid lightgrey;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.card picture {
+  display: flex;
+  justify-content: center;
+}
+.card img {
+  max-height: 200px;
+}
+.card h3 {
+  margin-top: 7px;
+  font-weight: bold;
+}
+.card p {
+  margin-top: 7px;
+  font-weight: bold;
+}
+.card button {
+  color: white;
+  background-color: black;
+  margin-top: 7px;
+  padding-left: 2em;
+  padding-right: 2em;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 4px;
+}
+.card button:active {
+  background-color: gray;
+}

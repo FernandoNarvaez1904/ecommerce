@@ -1,14 +1,15 @@
 import type { NextPage } from "next";
-import { trpc } from "../utils/trpc";
+import Header from "../components/header/Header";
+import Content from "../components/content/Content";
+import { useState } from "react";
 
 const Home: NextPage = () => {
-  const { data } = trpc.item.all.useQuery();
+  const [filterName, setFilterName] = useState("");
 
   return (
     <>
-      {data?.map((item) => (
-        <p key={item}>{item}</p>
-      ))}
+      <Header filterValue={filterName} setFilterValue={setFilterName} />
+      <Content filterValue={filterName} />
     </>
   );
 };
