@@ -1,0 +1,52 @@
+.container {
+  margin: 15%;
+  margin-top: 5%;
+}
+.container h1 {
+  font-size: x-large;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.orderItem {
+  border: 3px solid black;
+  border-radius: 10px;
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  margin-bottom: 10px;
+}
+.orderId {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+}
+.itemName {
+  display: flex;
+  align-items: center;
+}
+.clientName {
+  display: flex;
+  align-items: center;
+}
+.quantity {
+  display: flex;
+  align-items: center;
+}
+.price {
+  display: flex;
+  align-items: center;
+}
+.deleteBtn {
+  margin-top: 25px;
+  margin-bottom: 25px;
+  background-color: rgb(51, 49, 49);
+  color: white;
+  border-radius: 5px;
+  width: 100px;
+}
+.deleteBtn:active {
+  background-color: gray;
+}

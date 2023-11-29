@@ -33,6 +33,7 @@
   height: 40px;
   background-color: rgb(211, 211, 211);
   border-radius: 3px;
+  margin-top: 10px;
 }
 .container button:active {
   background-color: darkgrey;
@@ -42,4 +43,14 @@
 }
 .container p a {
   color: rgb(64, 64, 241);
+}
+.errorMsg {
+  margin-bottom: 10px;
+  --tw-border-opacity: 1;
+  border-color: rgb(248 113 113 / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 242 242 / var(--tw-bg-opacity));
+  padding: 0.5rem;
+  --tw-text-opacity: 1;
+  color: rgb(153 27 27 / var(--tw-text-opacity));
 }

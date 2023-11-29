@@ -65,7 +65,11 @@ function ItemCard({
         onClick={(e) => {
           e.stopPropagation();
           addToCart();
+          if (item.stock.lessThanOrEqualTo(0)) {
+            alert("Item has no stock");
+          }
         }}
+        disabled={item.stock.lessThanOrEqualTo(0)}
       >
         Add to cart
       </button>

@@ -7,11 +7,28 @@ import {
   deleteItemFromCartAtom,
 } from "../../atoms/cart";
 import { singleProductAtomFamily } from "../../atoms/products";
-import { it } from "node:test";
+import { trpc } from "../../utils/trpc";
 
 function ShoppingCartContent() {
-  const cart = useAtomValue(cartAtom);
+  const [cart, setCart] = useAtom(cartAtom);
   const total = useAtomValue(cartTotalAtom);
+  const { mutate, isLoading } = trpc.order.create.useMutation();
+
+  function createOrder() {
+    const cartEntries = Object.entries(cart).map(([key, value]) => ({
+      id: Number(key),
+      quantity: value,
+    }));
+    console.log(cartEntries, total);
+    mutate(
+      { total: total, items: cartEntries },
+      {
+        onSuccess: () => {
+          setCart({});
+        },
+      },
+    );
+  }
 
   return (
     <>
@@ -32,7 +49,9 @@ function ShoppingCartContent() {
             <dt>Total</dt>
             <dd>$ {total}</dd>
           </dl>
-          <button>Complete Checkout</button>
+          <button onClick={createOrder} disabled={isLoading}>
+            Complete Checkout
+          </button>
         </aside>
       </main>
     </>
