@@ -11,9 +11,9 @@ function ItemHeader() {
         </span>
         <span className={styles.listSpan}>
           <ul>
-            <li onClick={() => router.back()}>Home</li>
-            <li>Shop</li>
-            <li>About</li>
+            <li onClick={() => router.push(`/`)}>Home</li>
+            <li onClick={() => router.push(`/shoppingCart`)}>Cart</li>
+            <li onClick={() => router.push(`/login`)}>Login</li>
             <li>Contact</li>
           </ul>
         </span>

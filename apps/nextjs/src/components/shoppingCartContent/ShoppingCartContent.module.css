@@ -24,11 +24,14 @@
 }
 .image {
   height: 100px;
+  width: 100px;
   border: 1px solid gray;
   display: flex;
+  justify-content: center;
 }
 .details h3 {
   font-size: large;
+  width: 250px;
 }
 .quantityBox {
   height: 30px;
@@ -36,6 +39,7 @@
 }
 .quantityInput {
   height: 100%;
+  width: 80px;
   padding-left: 10px;
   text-align: center;
 }

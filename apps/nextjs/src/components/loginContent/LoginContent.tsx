@@ -1,5 +1,4 @@
 import styles from "./LoginContent.module.css";
-import RegisterForm from "../RegisterForm/RegisterForm";
 import { useRouter } from "next/router";
 function LoginContent() {
   const router = useRouter();

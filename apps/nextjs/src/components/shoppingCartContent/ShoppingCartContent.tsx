@@ -1,135 +1,86 @@
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import styles from "./ShoppingCartContent.module.css";
+import {
+  cartAtom,
+  cartItemQuantityAtomFamily,
+  cartTotalAtom,
+  deleteItemFromCartAtom,
+} from "../../atoms/cart";
+import { singleProductAtomFamily } from "../../atoms/products";
+import { it } from "node:test";
+
 function ShoppingCartContent() {
+  const cart = useAtomValue(cartAtom);
+  const total = useAtomValue(cartTotalAtom);
+
   return (
     <>
       <main className={styles.content}>
         <section className={styles.items}>
           <h2> Shopping Cart </h2>
           <ul>
-            <li className={styles.itemList}>
-              <div className={styles.item}>
-                <span className={styles.image}>
-                  <img src="#" alt="itemImage" />
-                </span>
-                <span className={styles.details}>
-                  <h3>Coca cola con pan y leche</h3>
-                  <p>price</p>
-                </span>
-                <span className={styles.quantity}>
-                  <div className={styles.quantityBox}>
-                    <input
-                      type="number"
-                      name="quantityBox"
-                      className={styles.quantityInput}
-                      min={1}
-                      max={9999}
-                      placeholder="1"
-                    />
-                  </div>
-                </span>
-                <span className={styles.totalPrice}> totalPrice </span>
-                <span>
-                  <button className={styles.deletebtn}>X</button>
-                </span>
-              </div>
-            </li>
-            <li className={styles.itemList}>
-              <div className={styles.item}>
-                <span className={styles.image}>
-                  <img src="#" alt="itemImage" />
-                </span>
-                <span className={styles.details}>
-                  <h3>Coca cola con pan y leche</h3>
-                  <p>price</p>
-                </span>
-                <span className={styles.quantity}>
-                  <div className={styles.quantityBox}>
-                    <input
-                      type="number"
-                      name="quantityBox"
-                      className={styles.quantityInput}
-                      min={1}
-                      max={9999}
-                      placeholder="1"
-                    />
-                  </div>
-                </span>
-                <span className={styles.totalPrice}> totalPrice </span>
-                <span>
-                  <button className={styles.deletebtn}>X</button>
-                </span>
-              </div>
-            </li>
-            <li className={styles.itemList}>
-              <div className={styles.item}>
-                <span className={styles.image}>
-                  <img src="#" alt="itemImage" />
-                </span>
-                <span className={styles.details}>
-                  <h3>Coca cola con pan y leche</h3>
-                  <p>price</p>
-                </span>
-                <span className={styles.quantity}>
-                  <div className={styles.quantityBox}>
-                    <input
-                      type="number"
-                      name="quantityBox"
-                      className={styles.quantityInput}
-                      min={1}
-                      max={9999}
-                      placeholder="1"
-                    />
-                  </div>
-                </span>
-                <span className={styles.totalPrice}> totalPrice </span>
-                <span>
-                  <button className={styles.deletebtn}>X</button>
-                </span>
-              </div>
-            </li>
-            <li className={styles.itemList}>
-              <div className={styles.item}>
-                <span className={styles.image}>
-                  <img src="#" alt="itemImage" />
-                </span>
-                <span className={styles.details}>
-                  <h3>Coca cola con pan y leche</h3>
-                  <p>price</p>
-                </span>
-                <span className={styles.quantity}>
-                  <div className={styles.quantityBox}>
-                    <input
-                      type="number"
-                      name="quantityBox"
-                      className={styles.quantityInput}
-                      min={1}
-                      max={9999}
-                      placeholder="1"
-                    />
-                  </div>
-                </span>
-                <span className={styles.totalPrice}> totalPrice </span>
-                <span>
-                  <button className={styles.deletebtn}>X</button>
-                </span>
-              </div>
-            </li>
+            {Object.keys(cart).map((cartItemId) => (
+              <li className={styles.itemList} key={cartItemId}>
+                <CartItem id={Number(cartItemId)} />
+              </li>
+            ))}
           </ul>
         </section>
         <aside className={styles.price}>
           <h2>Price Summary</h2>
-          <dl className={styles.subtotal}>
-            <dt>Subtotal</dt>
-            <dd>quantity</dd>
-          </dl>
           <dl className={styles.grandTotal}>
             <dt>Total</dt>
-            <dd>quantity</dd>
+            <dd>$ {total}</dd>
           </dl>
           <button>Complete Checkout</button>
         </aside>
       </main>
     </>
+  );
+}
+
+function CartItem({ id }: { id: number }) {
+  const item = useAtomValue(singleProductAtomFamily(id));
+  const [quantity, setQuantity] = useAtom(cartItemQuantityAtomFamily(id));
+  const deleteFromCart = useSetAtom(deleteItemFromCartAtom({ id }));
+
+  return (
+    <div className={styles.item}>
+      <span className={styles.image}>
+        <img src={item?.image_url ?? ""} alt={item?.name} />
+      </span>
+      <span className={styles.details}>
+        <h3>{item?.name}</h3>
+        <p>$ {item?.price.toFixed(2)}</p>
+      </span>
+      <span className={styles.quantity}>
+        <div className={styles.quantityBox}>
+          <input
+            type="number"
+            name="quantityBox"
+            className={styles.quantityInput}
+            min={1}
+            max={item?.stock.toNumber() ?? 0}
+            value={quantity}
+            onChange={(e) => setQuantity(Number(e.currentTarget.value))}
+          />
+        </div>
+      </span>
+      <span className={styles.totalPrice}>
+        $ {item?.price.toNumber() ?? 0 * quantity}
+      </span>
+      <span>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            deleteFromCart();
+          }}
+          className={styles.deletebtn}
+        >
+          X
+        </button>
+      </span>
+    </div>
   );
 }
 export default ShoppingCartContent;
