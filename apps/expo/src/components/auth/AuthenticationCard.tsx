@@ -15,7 +15,9 @@ function AuthenticationCard() {
         className="mt-2.5"
       >
         <Text className="self-center font-normal text-gray-500">
-          {needsNewAccount ? "No Account? Sign Up" : "Have an Account? Sign In"}
+          {!needsNewAccount
+            ? "No Account? Sign Up"
+            : "Have an Account? Sign In"}
         </Text>
       </Pressable>
     </View>
