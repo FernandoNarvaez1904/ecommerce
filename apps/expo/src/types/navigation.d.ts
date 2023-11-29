@@ -19,6 +19,7 @@ export type RootStackScreenProps<T extends keyof RootStackParamList> =
 export type HomeTabParamList = {
   Search: undefined;
   Cart: undefined;
+  Orders: undefined;
   "My Profile": undefined;
 };
 

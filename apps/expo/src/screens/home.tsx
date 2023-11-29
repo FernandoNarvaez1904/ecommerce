@@ -5,6 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { HomeTabParamList } from "../types/navigation";
 import CartListScreen from "./cart-list";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import MyOrdersScreen from "./my-orders";
 
 const Tab = createBottomTabNavigator<HomeTabParamList>();
 
@@ -12,10 +13,10 @@ function HomeScreen() {
   return (
     <SafeAreaView className="h-full">
       <Tab.Navigator
-        screenOptions={({ route }) => ({
+        screenOptions={{
           headerShown: false,
           tabBarShowLabel: false,
-        })}
+        }}
       >
         <Tab.Screen
           name="Search"
@@ -31,6 +32,15 @@ function HomeScreen() {
           component={CartListScreen}
           options={{
             tabBarIcon: (props) => <Ionicons name="cart-outline" {...props} />,
+          }}
+        />
+        <Tab.Screen
+          name="Orders"
+          component={MyOrdersScreen}
+          options={{
+            tabBarIcon: (props) => (
+              <Ionicons name="receipt-outline" {...props} />
+            ),
           }}
         />
         <Tab.Screen

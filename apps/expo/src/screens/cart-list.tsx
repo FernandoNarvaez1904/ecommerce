@@ -76,6 +76,7 @@ function CartHeader({
       mutate(input, {
         onSuccess: () => {
           trpcUtils.item.all.invalidate();
+          trpcUtils.order.allMyOrders.invalidate();
           setCart({});
         },
       });
