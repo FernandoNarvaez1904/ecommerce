@@ -1,0 +1,24 @@
+.header {
+  padding: 2em;
+  display: flex;
+  justify-content: space-between;
+}
+.logoSpan {
+  display: flex;
+}
+.logoSpan img {
+  padding-right: 5px;
+}
+.listSpan ul {
+  display: flex;
+}
+.listSpan ul li {
+  padding: 7px;
+  font-weight: bold;
+}
+#searchBar {
+  box-sizing: border-box;
+  border: 1px solid gray;
+  border-radius: 3px;
+  padding: 5px 10px;
+}
