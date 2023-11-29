@@ -1,6 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { router, protectedProcedure } from "../trpc";
 import { z } from "zod";
+import { clerkClient } from "@clerk/nextjs/server";
 
 export const orderRouter = router({
   create: protectedProcedure
@@ -93,16 +94,15 @@ export const orderRouter = router({
         },
       });
 
-      if (
-        ctx.auth.userId !== order.user_id ||
+      if (ctx.auth.userId !== order.user_id) {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        !ctx.auth.sessionClaims.publicMetadata.isAdmin
-      ) {
-        throw new TRPCError({
-          message: "Cannot cancel an order is not yours",
-          code: "FORBIDDEN",
-        });
+        if (!ctx.auth.sessionClaims.publicMetadata.isAdmin) {
+          throw new TRPCError({
+            message: "Cannot cancel an order is not yours",
+            code: "FORBIDDEN",
+          });
+        }
       }
 
       if (order.status !== "Placed") {
@@ -196,9 +196,13 @@ export const orderRouter = router({
     }),
 
   allMyOrders: protectedProcedure.query(({ ctx }) => {
+    console.log(ctx.auth, "hellou");
     return ctx.prisma.orders.findMany({
       where: {
-        user_id: ctx.auth.userId,
+        // @ts-ignore
+        user_id: ctx.auth.sessionClaims.publicMetadata.isAdmin
+          ? undefined
+          : ctx.auth.userId,
       },
       include: {
         orderitems: true,
