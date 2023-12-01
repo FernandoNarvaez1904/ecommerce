@@ -15,6 +15,7 @@ import CreateItemScreen from "./screens/create-item";
 import jotaiStore from "./atoms/store";
 import UpdateItemScreen from "./screens/update-item";
 import AuthenticationScreenModal from "./screens/auth-modal";
+import SingleOrderScreen from "./screens/single-order";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -43,6 +44,8 @@ function RootNavigator() {
           options={{ headerShown: false }}
         />
         <Stack.Screen name="SingleItemScreen" component={SingleItemScreen} />
+        <Stack.Screen name="Single Order" component={SingleOrderScreen} />
+
         {user?.publicMetadata.isAdmin && (
           <>
             <Stack.Screen name="Create Item" component={CreateItemScreen} />

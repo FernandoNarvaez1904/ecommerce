@@ -6,6 +6,7 @@ import { useUser } from "@clerk/clerk-expo";
 import { trpc } from "../utils/trpc";
 import { useAtomValue } from "jotai";
 import { singleOrderAtomFamily } from "../atoms/order";
+import { useNavigation } from "@react-navigation/native";
 
 type Order = inferProcedureOutput<AppRouter["order"]["allMyOrders"]>[number];
 
@@ -21,6 +22,8 @@ function OrderCard({ id }: { id: number }) {
   const trpcUtils = trpc.useContext();
 
   const isLoading = isCancelLoading || isCompleteLoading;
+
+  const navigation = useNavigation();
 
   if (order === null) {
     return null;
@@ -70,7 +73,10 @@ function OrderCard({ id }: { id: number }) {
   }
 
   return (
-    <View className="h-36 rounded border border-gray-200 py-2 px-4">
+    <Pressable
+      className="h-36 rounded border border-gray-200 py-2 px-4"
+      onPress={() => navigation.navigate("Single Order", { id: order.id })}
+    >
       <View className="flex h-full flex-row justify-between">
         <View className="justify-between">
           <Text className={`text-base ${statusColor}`}>{order.status}</Text>
@@ -106,7 +112,7 @@ function OrderCard({ id }: { id: number }) {
           )}
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 }
 
