@@ -1,7 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { router, protectedProcedure } from "../trpc";
 import { z } from "zod";
-import { clerkClient } from "@clerk/nextjs/server";
 
 export const orderRouter = router({
   create: protectedProcedure
