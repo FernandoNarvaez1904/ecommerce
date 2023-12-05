@@ -107,7 +107,7 @@ export const orderRouter = router({
 
       if (order.status !== "Placed") {
         throw new TRPCError({
-          message: "Only Places orders can be cancelled",
+          message: "Only Placed orders can be cancelled",
           code: "FORBIDDEN",
         });
       }
